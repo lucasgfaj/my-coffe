@@ -1,10 +1,46 @@
-import React from 'react'
-import { Text, View } from 'react-native'
+import MaterialIcons from '@expo/vector-icons/MaterialIcons';
+import { Tabs } from "expo-router";
 
-export default function Tabs() {
+export default function TabLayout() {
   return (
-    <View>
-      <Text>Tabs</Text>
-    </View>
-  )
+    <Tabs
+      screenOptions={{ 
+        tabBarActiveTintColor: "#C67C4E",
+        tabBarShowLabel: false,
+        tabBarStyle: {
+          height: 50, 
+          paddingBottom: 4,   
+          paddingTop: 4,     
+        },
+      }}
+    >
+      <Tabs.Screen
+        name="home"
+        options={{
+          headerShown: false,
+          tabBarIcon: ({ color }) => (
+            <MaterialIcons size={32} name="home" color={color} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="favorite"
+        options={{
+          headerShown: false,
+          tabBarIcon: ({ color }) => (
+            <MaterialIcons size={32} name="favorite" color={color} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="notifications"
+        options={{
+          headerShown: false,
+          tabBarIcon: ({ color }) => (
+            <MaterialIcons size={32} name="notifications" color={color} />
+          ),
+        }}
+      />
+    </Tabs>
+  );
 }
