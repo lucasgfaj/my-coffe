@@ -6,7 +6,7 @@ export default function Layout() {
       screenOptions={{
         headerShown: false,
         headerStyle: {
-          backgroundColor: 'white',
+          backgroundColor: '#fff',
         },
         headerTintColor: 'black',
         headerTitleStyle: {
