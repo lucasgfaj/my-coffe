@@ -1,3 +1,4 @@
+import AntDesign from '@expo/vector-icons/AntDesign';
 import React, { useState } from 'react';
 import {
   FlatList,
@@ -28,7 +29,7 @@ export default function Location() {
         onPress={() => setModalVisible(true)}
       >
         <Text style={styles.dropdownText}>{selected}</Text>
-        <Text style={styles.arrow}>˅</Text>
+        <Text style={styles.arrow}><AntDesign name="down" size={12} color="white" /></Text>
       </TouchableOpacity>
 
       <Modal visible={modalVisible} transparent animationType="slide">
@@ -51,15 +52,14 @@ export default function Location() {
 }
 
 const styles = StyleSheet.create({
-  container: { paddingTop: 80, paddingHorizontal: 20 },
+  container: { paddingTop: 15, paddingHorizontal: 20 },
   label: { fontSize: 14, color: '#aaa', marginBottom: 6 },
   dropdownButton: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#222',
-    padding: 12,
+    backgroundColor: '#313131',
+    padding: 0,
     borderRadius: 8,
-    justifyContent: 'space-between',
   },
   dropdownText: {
     color: '#fff',
@@ -67,9 +67,8 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   arrow: {
-    color: '#fff',
-    fontSize: 18,
-    marginLeft: 10,
+    marginTop: 3,
+    marginLeft: 6,
   },
   modalOverlay: {
     flex: 1,

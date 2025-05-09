@@ -9,7 +9,6 @@ export default function Index() {
 
   return (
     <View style={styles.container}>
-      {/* Imagem cobrindo 50% do topo */}
       <Image
         source={require("../assets/images/background.png")}
         style={styles.imageTop}
