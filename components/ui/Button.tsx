@@ -1,15 +1,27 @@
+import Ionicons from '@expo/vector-icons/Ionicons';
 import React from 'react';
-import { DimensionValue, StyleProp, StyleSheet, Text, TouchableOpacity, ViewStyle } from 'react-native';
+import {
+  DimensionValue,
+  StyleProp,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+  ViewStyle,
+} from 'react-native';
 
 interface ButtonProps {
   width?: DimensionValue;
   height?: DimensionValue;
   backgroundColor?: string;
   borderRadius?: number;
-  text: string;
+  text?: string;
+  icon?: keyof typeof Ionicons.glyphMap; // Tipagem segura para ícones
   textColor?: string;
   onPress?: () => void;
-  style?: StyleProp<ViewStyle>; // se quiser passar estilo externo
+  style?: StyleProp<ViewStyle>;
+  iconColor?: string;
+  iconSize?: number;
 }
 
 export default function Button({
@@ -21,6 +33,9 @@ export default function Button({
   textColor = '#fff',
   onPress,
   style,
+  icon,
+  iconColor = '#fff',
+  iconSize = 20,
 }: ButtonProps) {
   return (
     <TouchableOpacity
@@ -36,7 +51,10 @@ export default function Button({
       ]}
       onPress={onPress}
     >
-      <Text style={[styles.text, { color: textColor }]}>{text}</Text>
+      <View style={styles.content}>
+        {icon && <Ionicons name={icon} size={iconSize} color={iconColor} />}
+        {text && <Text style={[styles.text, { color: textColor, marginLeft: icon ? 8 : 0 }]}>{text}</Text>}
+      </View>
     </TouchableOpacity>
   );
 }
@@ -44,6 +62,10 @@ export default function Button({
 const styles = StyleSheet.create({
   button: {
     justifyContent: 'center',
+    alignItems: 'center',
+  },
+  content: {
+    flexDirection: 'row',
     alignItems: 'center',
   },
   text: {

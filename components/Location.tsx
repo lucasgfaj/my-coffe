@@ -52,7 +52,7 @@ export default function Location() {
 }
 
 const styles = StyleSheet.create({
-  container: { paddingTop: 15, paddingHorizontal: 20 },
+  container: { paddingHorizontal: 20 },
   label: { fontSize: 14, color: '#aaa', marginBottom: 6 },
   dropdownButton: {
     flexDirection: 'row',
