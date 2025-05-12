@@ -1,6 +1,5 @@
 import { LinearGradient } from "expo-linear-gradient";
 import { useRouter } from "expo-router";
-import React from "react";
 import { Image, StyleSheet, Text, View } from "react-native";
 import Button from "./ui/Button";
 
@@ -10,7 +9,7 @@ export default function Index() {
   return (
     <View style={styles.container}>
       <Image
-        source={require("../assets/images/background.png")}
+        source={require("../assets/images/background/background.png")}
         style={styles.imageTop}
         resizeMode="cover"
       />

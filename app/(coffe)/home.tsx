@@ -1,38 +1,64 @@
-import Location from '@/components/Location';
-import SearchBar from '@/components/SearchBar';
-import CardImg from '@/components/ui/CardImg';
-import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import Location from "@/components/Coffe/Location";
+import SearchBar from "@/components/Coffe/SearchBar";
+import StoreList from "@/components/Coffe/StoreList";
+import CardImg from "@/components/ui/CardImg";
+import Slider from "@/components/ui/Slider";
+import { categorys } from "@/mocks/categorys";
+import React from "react";
+import { ScrollView, StyleSheet, View } from "react-native";
 
 export default function Home() {
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
       <View style={styles.topSection}>
         <Location />
         <SearchBar />
-        <CardImg image={require('../../assets/images/coffe.png')} width={350} height={145} borderRadius={16} />
+        <CardImg
+          image={require("../../assets/images/art/coffe.png")}
+          width={350}
+          height={145}
+          borderRadius={16}
+        />
       </View>
 
       <View style={styles.bottomSection}>
+        <Slider
+          style={styles.slider}
+          data={categorys}
+          width={90}
+          height={30}
+          backgroundColor="#C67C4E"
+          textColor="white"
+          borderRadius={8}
+          onPressItem={(item) => console.log("Selecionado:", item.name)}
+        />
+        <View style={styles.storeListContainer}>
+          <StoreList />
+        </View>
       </View>
-    </View>
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'white',
-
+    backgroundColor: "white",
   },
   topSection: {
-    //  flex: 3, // 30%
     height: 260,
-    backgroundColor: '#313131',
+    backgroundColor: "#313131",
     paddingHorizontal: 20,
     paddingTop: 60,
   },
   bottomSection: {
-    // flex: 7, // 70%
+    paddingBottom: 32,
+  },
+  slider: {
+    marginTop: 100,
+    marginLeft: 8,
+  },
+  storeListContainer: {
+    marginLeft: 15,
   },
 });

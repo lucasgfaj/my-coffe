@@ -4,29 +4,29 @@ import { Tabs } from "expo-router";
 export default function TabLayout() {
   return (
     <Tabs
-      screenOptions={{ 
+      screenOptions={{
         tabBarActiveTintColor: "#C67C4E",
         tabBarShowLabel: false,
         tabBarStyle: {
-          height: 50, 
-          paddingBottom: 4,   
-          paddingTop: 4,     
+          height: 50,
+          paddingBottom: 4,
+          paddingTop: 4,
         },
       }}
     >
       <Tabs.Screen
         name="home"
         options={{
-          headerShown: false,
+          headerShown: false,  // Não exibe o cabeçalho
           tabBarIcon: ({ color }) => (
             <MaterialIcons size={32} name="home" color={color} />
           ),
         }}
       />
       <Tabs.Screen
-        name="favorite"
+        name="favorites"
         options={{
-          headerShown: false,
+          headerShown: false,  // Não exibe o cabeçalho
           tabBarIcon: ({ color }) => (
             <MaterialIcons size={32} name="favorite" color={color} />
           ),
@@ -35,7 +35,7 @@ export default function TabLayout() {
       <Tabs.Screen
         name="notifications"
         options={{
-          headerShown: false,
+          headerShown: false,  // Não exibe o cabeçalho
           tabBarIcon: ({ color }) => (
             <MaterialIcons size={32} name="notifications" color={color} />
           ),
