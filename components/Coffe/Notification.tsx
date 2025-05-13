@@ -1,27 +1,33 @@
-import { notifications } from '@/mocks/notifications';
-import React from 'react';
-import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { notifications } from "@/mocks/notifications";
+import React from "react";
+import { Image, StyleSheet, Text, View } from "react-native";
+import Button from "../ui/Button";
 export default function Notification() {
   return (
     <View style={styles.container}>
-      <Text style={styles.headerText}>Offer Notifications</Text>
+      <Text style={styles.headerText}>Notifications</Text>
+      <View style={styles.containerCard}>
+        {notifications.map((item) => (
+          <View key={item.id} style={styles.notificationCard}>
+            <Image source={item.image} style={styles.image} />
 
-      {notifications.map((item) => (
-        <View key={item.id} style={styles.notificationCard}>
-          {/* Coffee Image */}
-          <Image source={item.image} style={styles.image} />
+            <View style={styles.notificationDetails}>
+              <Text style={styles.title}>{item.title}</Text>
+              <Text style={styles.price}>${item.price}</Text>
+              <Text style={styles.message}>{item.message}</Text>
+            </View>
 
-          <View style={styles.notificationDetails}>
-            <Text style={styles.title}>{item.title}</Text>
-            <Text style={styles.price}>${item.price}</Text>
-            <Text style={styles.message}>{item.message}</Text>
+            <Button
+              width={100}
+              height={40}
+              backgroundColor="#C67C4E"
+              borderRadius={12}
+              text="Claim Now"
+              textColor="#fff"
+            />
           </View>
-
-          <TouchableOpacity style={styles.button}>
-            <Text style={styles.buttonText}>Claim Now</Text>
-          </TouchableOpacity>
-        </View>
-      ))}
+        ))}
+      </View>
     </View>
   );
 }
@@ -29,41 +35,38 @@ export default function Notification() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f4f4f4', // Soft gray background for the screen
-    padding: 15,
+    backgroundColor: "white",
+  },
+  containerCard: {
+    padding: 20,
   },
   headerText: {
     fontSize: 24,
-    fontWeight: 'bold',
-    marginBottom: 20,
-    textAlign: 'center',
-    color: '#fff',
-    backgroundColor: '#6F4F37', // Brown background for header
+    fontWeight: "bold",
+    marginBottom: 10,
+    textAlign: "center",
+    color: "#fff",
+    backgroundColor: "#313131",
     paddingVertical: 15,
-    paddingHorizontal: 25,
-    borderRadius: 10, // Rounded corners for header
-    shadowColor: "#000", // Shadow for a more elegant look
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.2,
-    shadowRadius: 4,
+    borderRadius: 12,
   },
   notificationCard: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: '#fff', // White background for cards
-    padding: 15,
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: "#fff",
+    padding: 10,
     marginBottom: 20,
-    borderRadius: 12, // Larger rounded corners for the cards
+    borderRadius: 12,
     borderWidth: 1,
-    borderColor: '#ddd',
-    elevation: 5, // Shadow for depth
+    borderColor: "#ddd",
+    elevation: 5,
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
     shadowRadius: 8,
   },
   image: {
-    width: 60, // Larger image size for better visual impact
+    width: 60,
     height: 60,
     borderRadius: 10,
     marginRight: 15,
@@ -73,29 +76,22 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 18,
-    fontWeight: 'bold',
-    color: '#333', // Dark gray for title for better contrast
+    fontWeight: "bold",
+    color: "#333",
   },
   price: {
     fontSize: 16,
-    color: '#6F4F37', // Brown color for price
+    color: "#6F4F37",
     marginVertical: 5,
   },
   message: {
     fontSize: 14,
-    color: '#777', // Lighter gray for the message
+    color: "#777",
   },
-  button: {
-    backgroundColor: '#6F4F37', // Brown background for button
-    paddingVertical: 8,
-    paddingHorizontal: 18,
-    borderRadius: 8,
-    marginLeft: 15,
-    alignSelf: 'center',
-  },
+
   buttonText: {
-    color: '#fff', // White text on the button
-    fontWeight: 'bold',
-    textAlign: 'center',
+    color: "#fff",
+    fontWeight: "bold",
+    textAlign: "center",
   },
 });

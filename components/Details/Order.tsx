@@ -9,7 +9,6 @@ export default function Order() {
   const { id } = useLocalSearchParams();
   const router = useRouter();
 
-  // Verifique se o id foi encontrado e é uma string
   if (!id || typeof id !== 'string') {
     return (
       <View style={styles.container}>
@@ -18,7 +17,6 @@ export default function Order() {
     );
   }
 
-  // Agora procuramos o produto com base no id, que é uma string
   const product = products.find((item) => item.id === id);
 
   if (!product) {
@@ -39,7 +37,7 @@ export default function Order() {
       <Button
         text="Continuar para Entrega"
         icon="arrow-forward"
-        onPress={() => router.push(`/delivery?id=${product.id}`)} // Garantindo que o id seja passado corretamente
+        onPress={() => router.push(`/delivery?id=${product.id}`)} 
         style={{ marginTop: 24 }}
       />
     </View>

@@ -23,7 +23,7 @@ export default function Layout() {
         options={{ headerShown: false }}
       />
       <Stack.Screen
-        name="tail"     // Tela de tail
+        name="detail"     // Tela de tail
         options={{ headerShown: false }}
       />
     </Stack>
