@@ -1,50 +1,73 @@
-# Welcome to your Expo app 👋
+# Welcome to My-Coffe App ☕
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+It's a coffee app for a coffee shop.
 
-## Get started
+### Coffee App Features
+- Buy Coffee for Delivery
+Order coffee and get it delivered to your home.
+
+- Favorites
+Save your favorite coffees for quick access.
+
+- Notifications and Promotions
+Get alerts about offers and news.
+
+## How to Execute?
 
 1. Install dependencies
 
    ```bash
-   npm install
+   yarn
    ```
 
 2. Start the app
 
    ```bash
-   npx expo start
+   yarn start
    ```
+## Screens for the App
 
-In the output, you'll find options to open the app in a
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/6a9ec413-ce05-482e-ac4d-d5e58ab79c49" width="200"/>
+  <img src="https://github.com/user-attachments/assets/9f3841a0-fc40-4199-b494-760bf98b9671" width="200"/>
+  <img src="https://github.com/user-attachments/assets/ab503b6c-f526-41e7-88e0-dd9ddc8fc6ef" width="200"/>
+  <img src="https://github.com/user-attachments/assets/2b4479af-5513-479f-a638-ccfcd43152a2" width="200"/>
+</p>
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+## Figma
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+- [My-Coffe](https://www.figma.com/design/dnHIbg0CA0LHI5DLtZBeey/Coffee-Shop-Mobile-App-Design--Community-?node-id=2-2&t=ccuUfSoYzPqTbh4j-1): Prototipation Screens for the App
 
-## Get a fresh project
+### If you're updating Expo, follow the steps below:
 
-When you're ready, run:
+### 1️⃣ Remove `yarn.lock`
+
+Removes the lock file to ensure a clean reinstall of dependencies.
 
 ```bash
-npm run reset-project
+rm yarn.lock
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+### 2️⃣ Add the Expo package again
 
-## Learn more
+Adds the latest available version of Expo to your project.
 
-To learn more about developing your project with Expo, look at the following resources:
+```bash
+yarn add expo
+```
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+### 3️⃣ Fix dependencies with `expo install --fix`
 
-## Join the community
+Automatically checks and fixes packages to match the current SDK version.
 
-Join our community of developers creating universal apps.
+```bash
+npx expo install --fix
+```
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+### 4️⃣ Start the project using tunnel mode
+
+Starts the Expo server in tunnel mode (useful behind firewalls or NAT).
+
+```bash
+yarn start --tunnel
+```
