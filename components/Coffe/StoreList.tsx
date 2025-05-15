@@ -1,6 +1,5 @@
-// StoreList.tsx
-import { products } from '@/mocks/products';
-import { useRouter } from 'expo-router'; // Importando o hook useRouter
+import { Product } from '@/constants/Product';
+import { useRouter } from 'expo-router';
 import React from 'react';
 import { Dimensions, FlatList, StyleSheet, View } from 'react-native';
 import StoreCard from './StoreCard';
@@ -9,11 +8,15 @@ const { width } = Dimensions.get('window');
 const CARD_GAP = 16;
 const CARD_WIDTH = (width - CARD_GAP * 3) / 2; // 2 cards por linha
 
-export default function StoreList() {
-  const router = useRouter(); // Usando o router
+interface StoreListProps {
+  products: Product[];
+}
+
+
+export default function StoreList({ products }: StoreListProps) {
+  const router = useRouter();
 
   const handlePress = (productId: string) => {
-    // Navega para a tela de detalhes passando o ID do produto como parâmetro
     router.push(`/(details)/detail?id=${productId}`);
   };
 
@@ -21,9 +24,9 @@ export default function StoreList() {
     <FlatList
       data={products}
       keyExtractor={(item) => item.id}
-      numColumns={2} // Configura 2 cards por linha
-      showsVerticalScrollIndicator={false} // Remove a barra de rolagem vertical
-      scrollEnabled={false} // Desabilita a rolagem
+      numColumns={2}
+      showsVerticalScrollIndicator={false}
+      scrollEnabled={false}
       contentContainerStyle={styles.listContent}
       renderItem={({ item }) => (
         <View style={[styles.cardContainer, { width: CARD_WIDTH }]}>
@@ -34,7 +37,7 @@ export default function StoreList() {
             price={item.price}
             rating={item.rating}
             onPressAdd={() => console.log('Adicionado:', item.title)}
-            onPress={() => handlePress(item.id)} // Passa o ID para a navegação
+            onPress={() => handlePress(item.id)}
           />
         </View>
       )}

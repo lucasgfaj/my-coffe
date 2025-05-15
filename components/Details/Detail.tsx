@@ -12,7 +12,7 @@ export default function Detail() {
   if (!product) {
     return (
       <View style={styles.container}>
-        <Text>Produto não encontrado</Text>
+        <Text>Product is not found</Text>
       </View>
     );
   }
@@ -29,7 +29,7 @@ export default function Detail() {
         text="Comprar"
         icon="cart"
         backgroundColor="#C67C4E"
-        onPress={() => router.push(`/order?id=${product.id}`)} // navegando para /order com o ID
+        onPress={() => router.push(`/order?id=${product.id}`)}
         style={{ marginTop: 20 }}
       />
     </View>
