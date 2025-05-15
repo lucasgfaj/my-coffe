@@ -1,13 +1,15 @@
+import { ActionSheetProvider } from '@expo/react-native-action-sheet';
 import { Stack } from 'expo-router';
-
 export default function Layout() {
   return (
+       <ActionSheetProvider>
     <Stack
       screenOptions={{
+        headerShown: false,
         headerStyle: {
-          backgroundColor: 'black',
+          backgroundColor: '#fff',
         },
-        headerTintColor: '#fff',
+        headerTintColor: 'black',
         headerTitleStyle: {
           fontWeight: 'bold',
         },
@@ -19,13 +21,7 @@ export default function Layout() {
         options={{ headerShown: false}} 
    
       />
-      <Stack.Screen   
-        name="tabs"
-        // options={{
-        //   headerTitle: 'Sair', // Aqui troca o "Tabs"
-        // }}
-        options={{ headerShown: false}} 
-        />
     </Stack>
+    </ActionSheetProvider>
   );
 }
