@@ -1,12 +1,19 @@
 import { Ionicons } from "@expo/vector-icons";
 import React from "react";
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+  ViewStyle,
+} from "react-native";
 
 interface NavigationProps {
-  iconRight?: keyof typeof Ionicons.glyphMap; // Ícone do lado direito
-  text: string; // Texto central (ex: "Detail")
-  onBackPress: () => void; // Função de voltar
-  onRightPress?: () => void; // Clique no ícone da direita
+  iconRight?: keyof typeof Ionicons.glyphMap;
+  text: string;
+  onBackPress: () => void;
+  onRightPress?: () => void;
+  style?: ViewStyle | ViewStyle[]; // <- estilo externo opcional
 }
 
 export default function Navigation({
@@ -14,24 +21,22 @@ export default function Navigation({
   text,
   onBackPress,
   onRightPress,
+  style,
 }: NavigationProps) {
   return (
-    <View style={styles.container}>
-      {/* Ícone de Voltar */}
-      <TouchableOpacity onPress={onBackPress}>
+    <View style={[styles.container, style]}>
+      <TouchableOpacity onPress={onBackPress} hitSlop={80}>
         <Ionicons name="chevron-back" size={24} color="black" />
       </TouchableOpacity>
 
-      {/* Texto Centralizado */}
       <Text style={styles.title}>{text}</Text>
 
-      {/* Ícone da Direita (opcional) */}
       {iconRight ? (
-        <TouchableOpacity onPress={onRightPress}>
+        <TouchableOpacity onPress={onRightPress} hitSlop={80}>
           <Ionicons name={iconRight} size={24} color="black" />
         </TouchableOpacity>
       ) : (
-        <View style={{ width: 24 }} /> // Espaço para manter alinhamento
+        <View style={{ width: 24 }} />
       )}
     </View>
   );
@@ -44,11 +49,10 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    backgroundColor: "#fff",
   },
   title: {
-    fontSize: 16,
-    fontWeight: "bold",
+    fontSize: 18,
+    fontWeight: "800",
     position: "absolute",
     left: 0,
     right: 0,

@@ -18,6 +18,7 @@ export default function Delivery() {
 
   return (
     <View style={styles.container}>
+
       <Text style={styles.title}>Entrega do produto:</Text>
       <Image source={product.image} style={styles.image} />
       <Text style={styles.subtitle}>{product.title}</Text>
