@@ -9,14 +9,16 @@ import {
 } from "react-native";
 
 interface NavigationProps {
+  iconLeft?: keyof typeof Ionicons.glyphMap; // <- novo prop opcional
   iconRight?: keyof typeof Ionicons.glyphMap;
-  text: string;
+  text?: string;
   onBackPress: () => void;
   onRightPress?: () => void;
-  style?: ViewStyle | ViewStyle[]; // <- estilo externo opcional
+  style?: ViewStyle | ViewStyle[];
 }
 
 export default function Navigation({
+  iconLeft = "chevron-back", // <- valor padrão
   iconRight,
   text,
   onBackPress,
@@ -26,7 +28,7 @@ export default function Navigation({
   return (
     <View style={[styles.container, style]}>
       <TouchableOpacity onPress={onBackPress} hitSlop={80}>
-        <Ionicons name="chevron-back" size={24} color="black" />
+        <Ionicons name={iconLeft} size={24} color="black" />
       </TouchableOpacity>
 
       <Text style={styles.title}>{text}</Text>
