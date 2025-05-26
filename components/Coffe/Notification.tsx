@@ -1,8 +1,17 @@
 import { notifications } from "@/mocks/notifications";
+import { useRouter } from "expo-router";
 import React from "react";
 import { Image, StyleSheet, Text, View } from "react-native";
 import Button from "../ui/Button";
+
 export default function Notification() {
+  const router = useRouter();
+
+  const handleClaim = (id: string) => {
+    // Navega para a rota detail passando o id
+    router.push(`/detail?id=${id}`);
+  };
+
   return (
     <View style={styles.container}>
       <Text style={styles.headerText}>Notifications</Text>
@@ -24,6 +33,7 @@ export default function Notification() {
               borderRadius={12}
               text="Claim Now"
               textColor="#fff"
+              onPress={() => handleClaim(item.id)}
             />
           </View>
         ))}
@@ -88,7 +98,6 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: "#777",
   },
-
   buttonText: {
     color: "#fff",
     fontWeight: "bold",

@@ -1,13 +1,9 @@
 import { products } from "@/mocks/products";
+import { addFavorite, isFavorite, removeFavorite } from "@/storage/favorites";
 import { useLocalSearchParams, useRouter } from "expo-router";
-import React from "react";
-import {
-  Pressable,
-  ScrollView,
-  StyleSheet,
-  Text,
-  View,
-} from "react-native";
+import React, { useEffect, useState } from "react";
+
+import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import Button from "../ui/Button";
 import CardImg from "../ui/CardImg";
 import Navigation from "../ui/Navigation";
@@ -19,7 +15,23 @@ export default function Detail() {
   const product = products.find((item) => item.id === id);
 
   const handleBack = () => router.back();
-  const handleRightIconPress = () => console.log("Favorite");
+  const [favorite, setFavorite] = useState(false);
+
+  useEffect(() => {
+    if (product) {
+      isFavorite(product.id).then(setFavorite);
+    }
+  }, [product]);
+
+  const handleRightIconPress = async () => {
+    if (!product) return;
+    if (favorite) {
+      await removeFavorite(product.id);
+    } else {
+      await addFavorite({ ...product, votes: product.votes ?? 0 });
+    }
+    setFavorite(!favorite);
+  };
 
   if (!product) {
     return (
@@ -34,7 +46,7 @@ export default function Detail() {
       <Navigation
         style={styles.navigation}
         text="Detail"
-        iconRight="heart-outline"
+        iconRight={favorite ? "heart" : "heart-outline"}
         onBackPress={handleBack}
         onRightPress={handleRightIconPress}
       />
@@ -59,8 +71,7 @@ export default function Detail() {
       <View style={styles.section}>
         <Text style={styles.sectionTitle}>Description</Text>
         <Text style={styles.description}>
-          {product.description}{" "}
-          <Text style={styles.readMore}>Read More</Text>
+          {product.description} <Text style={styles.readMore}>Read More</Text>
         </Text>
       </View>
 
@@ -68,8 +79,15 @@ export default function Detail() {
         <Text style={styles.sectionTitle}>Size</Text>
         <View style={styles.sizes}>
           {["S", "M", "L"].map((size) => (
-            <Pressable key={size} style={size === "M" ? styles.sizeActive : styles.size}>
-              <Text style={size === "M" ? styles.sizeTextActive : styles.sizeText}>{size}</Text>
+            <Pressable
+              key={size}
+              style={size === "M" ? styles.sizeActive : styles.size}
+            >
+              <Text
+                style={size === "M" ? styles.sizeTextActive : styles.sizeText}
+              >
+                {size}
+              </Text>
             </Pressable>
           ))}
         </View>
