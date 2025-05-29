@@ -21,6 +21,12 @@ export default function Layout() {
         options={{ headerShown: false}} 
    
       />
+      <Stack.Screen
+        name="login"
+        // options={{ title: 'MyCoffe' }}
+        options={{ headerShown: false}} 
+   
+      />
     </Stack>
     </ActionSheetProvider>
   );
