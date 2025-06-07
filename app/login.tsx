@@ -27,6 +27,23 @@ export default function _screen() {
     }
   }, [user]);
 
+  if (loading) {
+    return (
+      <View
+        style={{
+          flex: 1,
+          justifyContent: "center",
+          alignItems: "center",
+          backgroundColor: "#FCF8F3",
+        }}
+      >
+        <Text style={{ fontSize: 18, color: "#6D4C41", marginBottom: 10 }}>
+          Carregando...
+        </Text>
+      </View>
+    );
+  }
+
   return (
     <KeyboardAvoidingView
       style={styles.container}

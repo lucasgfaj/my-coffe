@@ -1,13 +1,13 @@
 import { useRouter } from "expo-router";
 import { useState } from "react";
 import {
-    Alert,
-    KeyboardAvoidingView,
-    Platform,
-    StyleSheet,
-    Text,
-    TextInput,
-    View,
+  Alert,
+  KeyboardAvoidingView,
+  Platform,
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
 } from "react-native";
 
 import Button from "@/components/ui/Button";
@@ -47,6 +47,23 @@ export default function RegisterScreen() {
       }
     }
   };
+
+  if (loading) {
+    return (
+      <View
+        style={{
+          flex: 1,
+          justifyContent: "center",
+          alignItems: "center",
+          backgroundColor: "#FCF8F3",
+        }}
+      >
+        <Text style={{ fontSize: 18, color: "#6D4C41", marginBottom: 10 }}>
+          Carregando...
+        </Text>
+      </View>
+    );
+  }
 
   return (
     <KeyboardAvoidingView
