@@ -1,6 +1,15 @@
 import { useRouter } from "expo-router";
 import { useEffect, useState } from "react";
-import { Alert, StyleSheet, Text, TextInput, View } from "react-native";
+import {
+  Alert,
+  KeyboardAvoidingView,
+  Platform,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from "react-native";
 
 import Button from "@/components/ui/Button";
 import useAuth from "@/firebase/hooks/useAuth";
@@ -19,119 +28,174 @@ export default function _screen() {
   }, [user]);
 
   return (
-    <View style={styles.container}>
-      {/* <Image
-        source={require('@/assets/coffee-logo.png')} 
-        style={styles.logo}
-      /> */}
+    <KeyboardAvoidingView
+      style={styles.container}
+      behavior={Platform.OS === "ios" ? "padding" : undefined}
+    >
+      {/* Título MyCoffe centralizado acima do card */}
+      <View style={styles.titleContainer}>
+        <Text style={styles.titleText}>MyCoffe</Text>
+        <Text style={styles.coffeeIcon}>☕️</Text>
+      </View>
 
-      <Text style={styles.title}>Welcome Back!</Text>
-      <Text style={styles.subtitle}>Sign in to your account</Text>
+      <View style={styles.innerContainer}>
+        <Text style={styles.title}>Bem-vindo de volta!</Text>
+        <Text style={styles.subtitle}>Acesse sua conta</Text>
 
-      <Text style={styles.instructionText}>
-        Use the provided credentials for demo:
-      </Text>
-      <Text style={styles.instructionText}>
-        Email: <Text style={styles.boldText}>user@example.com</Text>
-      </Text>
-      <Text style={styles.instructionText}>
-        Password: <Text style={styles.boldText}>123456</Text>
-      </Text>
+        <View style={styles.demoBox}>
+          <Text style={styles.demoTitle}>Acesso Demo:</Text>
+          <Text style={styles.demoText}>
+            Email: <Text style={styles.bold}>user@example.com</Text>
+          </Text>
+          <Text style={styles.demoText}>
+            Senha: <Text style={styles.bold}>123456</Text>
+          </Text>
+        </View>
 
-      <TextInput
-        style={styles.input}
-        value={email}
-        onChangeText={setEmail}
-        placeholder="Email Address"
-        placeholderTextColor="#888"
-        keyboardType="email-address"
-        autoCapitalize="none"
-      />
-      <TextInput
-        style={styles.input}
-        value={password}
-        onChangeText={setPassword}
-        secureTextEntry
-        placeholder="Password"
-        placeholderTextColor="#888"
-      />
+        <TextInput
+          style={styles.input}
+          value={email}
+          onChangeText={setEmail}
+          placeholder="Email"
+          placeholderTextColor="#aaa"
+          keyboardType="email-address"
+          autoCapitalize="none"
+        />
+        <TextInput
+          style={styles.input}
+          value={password}
+          onChangeText={setPassword}
+          secureTextEntry
+          placeholder="Senha"
+          placeholderTextColor="#aaa"
+        />
 
-      <Button
-        text="Login"
-        onPress={async () => {
-          try {
-            await login(email, password);
-            router.replace("/(coffe)/home");
-          } catch (error) {
-            if (error instanceof Error) {
-              Alert.alert("Login Error", error.message);
-            } else {
-              Alert.alert("Login Error", "Unknown error occurred");
+        <Button
+          text="Entrar"
+          onPress={async () => {
+            try {
+              await login(email, password);
+              router.replace("/(coffe)/home");
+            } catch (error) {
+              if (error instanceof Error) {
+                Alert.alert("Erro ao entrar", error.message);
+              } else {
+                Alert.alert("Erro ao entrar", "Erro desconhecido.");
+              }
             }
-          }
-        }}
-        style={styles.loginButton}
-      />
-    </View>
+          }}
+          style={styles.loginButton}
+        />
+
+        {/* Opção de cadastro */}
+        <View style={styles.registerContainer}>
+          <Text style={styles.registerText}>Ainda não é usuário? </Text>
+          <TouchableOpacity onPress={() => router.push("/register")}>
+            <Text style={styles.registerLink}>Cadastre-se</Text>
+          </TouchableOpacity>
+        </View>
+      </View>
+    </KeyboardAvoidingView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: "#FCF8F3",
     justifyContent: "center",
     alignItems: "center",
-    paddingHorizontal: 20,
-    backgroundColor: "#fff",
+    paddingHorizontal: 24,
   },
-  logo: {
-    width: 150,
-    height: 150,
-    resizeMode: "contain",
-    marginBottom: 30,
+  titleContainer: {
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    marginBottom: 12,
+  },
+  titleText: {
+    fontSize: 36,
+    fontWeight: "700",
+    fontFamily: "Georgia",
+    color: "#6D4C41",
+  },
+  coffeeIcon: {
+    fontSize: 36,
+    marginLeft: 8,
+    color: "#6D4C41",
+  },
+  innerContainer: {
+    width: "100%",
+    maxWidth: 400,
+    backgroundColor: "#fff",
+    padding: 32,
+    borderRadius: 16,
+    shadowColor: "#000",
+    shadowOpacity: 0.06,
+    shadowRadius: 10,
+    elevation: 4,
   },
   title: {
     fontSize: 28,
     fontWeight: "bold",
-    color: "#333",
-    marginBottom: 10,
-    fontFamily: "Montserrat_700Bold",
+    color: "#4E342E",
+    marginBottom: 4,
+    textAlign: "center",
   },
   subtitle: {
     fontSize: 16,
-    color: "#666",
-    marginBottom: 30,
-    fontFamily: "Montserrat_400Regular",
-  },
-  instructionText: {
-    fontSize: 14,
-    color: "#666",
+    color: "#7B5E57",
+    marginBottom: 24,
     textAlign: "center",
-    marginBottom: 5,
   },
-  boldText: {
+  demoBox: {
+    backgroundColor: "#FFF3E0",
+    padding: 12,
+    borderRadius: 10,
+    marginBottom: 20,
+  },
+  demoTitle: {
+    fontWeight: "600",
+    color: "#6D4C41",
+    marginBottom: 4,
+  },
+  demoText: {
+    color: "#5D4037",
+    fontSize: 14,
+    lineHeight: 20,
+  },
+  bold: {
     fontWeight: "bold",
-    color: "#333",
+    color: "#3E2723",
   },
   input: {
     width: "100%",
     height: 50,
-    backgroundColor: "#f5f5f5",
+    backgroundColor: "#F9F9F9",
     borderRadius: 10,
     paddingHorizontal: 15,
     fontSize: 16,
     color: "#333",
     marginBottom: 15,
     borderWidth: 1,
-    borderColor: "#e0e0e0",
+    borderColor: "#DDD0C8",
   },
   loginButton: {
     width: "100%",
-    height: 50,
-    backgroundColor: "#8B4513",
-    borderRadius: 10,
+    marginTop: 10,
+  },
+  registerContainer: {
+    marginTop: 16,
+    flexDirection: "row",
     justifyContent: "center",
-    alignItems: "center",
-    marginTop: 20,
+  },
+  registerText: {
+    color: "#7B5E57",
+    fontSize: 14,
+  },
+  registerLink: {
+    color: "#6D4C41",
+    fontSize: 14,
+    fontWeight: "bold",
   },
 });

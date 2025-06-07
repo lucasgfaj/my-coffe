@@ -54,6 +54,15 @@ export default function TabLayout() {
           ),
         }}
       />
+      <Tabs.Screen
+        name="profile"
+        options={{
+          headerShown: false,
+          tabBarIcon: ({ color }) => (
+            <MaterialIcons size={28} name="supervised-user-circle" color={color} />
+          ),
+        }}
+      />
     </Tabs>
   );
 }
