@@ -34,7 +34,7 @@ export default function StoreList({ products }: StoreListProps) {
             image={item.image}
             title={item.title}
             description={item.description}
-            price={item.price}
+            price={String(item.price)}
             rating={item.rating}
             onPressAdd={() => console.log('Adicionado:', item.title)}
             onPress={() => handlePress(item.id)}

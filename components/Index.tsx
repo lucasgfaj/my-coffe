@@ -33,7 +33,7 @@ export default function Index() {
             borderRadius={12}
             text="Get Started"
             textColor="#fff"
-            onPress={() => router.push("/(coffe)/home")}
+            onPress={() => router.push("/login")}
           />
         </View>
       </LinearGradient>
@@ -59,6 +59,7 @@ const styles = StyleSheet.create({
     paddingBottom: 40,
     alignItems: "center",
     gap: 20,
+    marginBottom: 40,
   },
   textPrimary: {
     color: "white",
