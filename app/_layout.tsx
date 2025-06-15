@@ -1,8 +1,10 @@
+import { ThemeProvider } from '@/context/ThemeContext';
 import { ActionSheetProvider } from '@expo/react-native-action-sheet';
 import { Stack } from 'expo-router';
 export default function Layout() {
   return (
        <ActionSheetProvider>
+         <ThemeProvider>
     <Stack
       screenOptions={{
         headerShown: false,
@@ -28,6 +30,7 @@ export default function Layout() {
    
       />
     </Stack>
+    </ThemeProvider>
     </ActionSheetProvider>
   );
 }
