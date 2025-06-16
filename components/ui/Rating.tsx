@@ -6,6 +6,7 @@ interface RatingProps {
   value: number; 
   votes?: number; 
   style?: ViewStyle;
+  testID?: string;
 }
 
 export default function Rating({ value, votes, style }: RatingProps) {

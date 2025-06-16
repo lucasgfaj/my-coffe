@@ -22,6 +22,8 @@ interface ButtonProps {
   style?: StyleProp<ViewStyle>;
   iconColor?: string;
   iconSize?: number;
+   iconTestID?: string;
+  testID?: string;
 }
 
 export default function Button({
