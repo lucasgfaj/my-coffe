@@ -1,0 +1,20 @@
+# flows/register-new-user.yaml
+appId: com.mycoffe # Substitua pelo seu appId real se estiver construindo o app
+# Ou se estiver usando Expo Go:
+# appId: host.exp.exponent
+# - openLink: exp://127.0.0.1:8081
+
+- launchApp
+- tapOn: "Get Started" # Clica no botão "Get Started" da tela inicial
+- tapOn: "Cadastre-se" # Clica no link "Cadastre-se" na tela de login
+
+- inputText: "Teste Usuário" # Preenche o campo Nome
+- tapOn: "Email" # Clica no campo Email
+- inputText: "teste.maestro@example.com" # Preenche o campo Email
+- tapOn: "Senha" # Clica no campo Senha
+- inputText: "password123" # Preenche o campo Senha
+
+- tapOn: "Registrar" # Clica no botão Registrar
+
+- assertVisible: "Bem-vindo de volta!" # Verifica se a tela de login foi carregada após o registro bem-sucedido
+- assertVisible: "Acesse sua conta"
