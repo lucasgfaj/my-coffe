@@ -39,16 +39,18 @@ export default function RegisterScreen() {
       setLoading(true);
 
       await api.post("/api/collections/users/records", {
-        email,
-        password,
+        email: email,
+        password: password,
         passwordConfirm: password,
-        name,
+        name: name,
+        emailVisibility: true,
       });
 
       Alert.alert("Sucesso", "Usuário registrado com sucesso!");
       router.replace("/login");
     } catch (error: any) {
-      const message = error?.response?.data?.message || error.message || "Erro desconhecido";
+      const message =
+        error?.response?.data?.message || error.message || "Erro desconhecido";
       Alert.alert("Erro ao registrar", message);
     } finally {
       setLoading(false);
@@ -100,10 +102,7 @@ export default function RegisterScreen() {
 
         <View style={styles.loginContainer}>
           <Text style={styles.loginText}>Já tem uma conta? </Text>
-          <Text
-            style={styles.loginLink}
-            onPress={() => router.push("/login")}
-          >
+          <Text style={styles.loginLink} onPress={() => router.push("/login")}>
             Entre aqui
           </Text>
         </View>

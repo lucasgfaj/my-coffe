@@ -20,8 +20,8 @@ export default function Profile() {
   const router = useRouter();
 
   const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [userId, setUserId] = useState(""); // ID do usuário no PocketBase
+  const [identify, setIdentify] = useState(""); // <-- agora representa o e-mail
+  const [userId, setUserId] = useState("");
   const [isEditing, setIsEditing] = useState(false);
   const [loadingSave, setLoadingSave] = useState(false);
 
@@ -35,25 +35,25 @@ export default function Profile() {
   }, [token]);
 
   const fetchUserData = async () => {
-    try {
-      const res = await api.get("/api/users/authenticated", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+  try {
+    const res = await api.get("/api/collections/users/auth-with-token", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
 
-      setName(res.data.name);
-      setEmail(res.data.email);
-      setUserId(res.data.id);
-    } catch (error) {
-      console.error("Erro ao carregar dados:", error);
-      Alert.alert("Erro", "Falha ao carregar dados do perfil.");
-    }
-  };
+    setName(res.data.record.name || "");
+    setIdentify(res.data.record.identify || "");
+    setUserId(res.data.record.id);
+  } catch (error) {
+    console.error("Erro ao carregar dados:", error);
+    Alert.alert("Erro", "Falha ao carregar dados do perfil.");
+  }
+};
 
   const handleLogout = async () => {
     try {
-      setToken(""); // remove token do contexto
+      setToken("");
       router.replace("/login");
     } catch (error) {
       Alert.alert("Erro", "Falha ao fazer logout.");
@@ -69,13 +69,17 @@ export default function Profile() {
     try {
       setLoadingSave(true);
 
-      await api.patch(`/api/collections/users/records/${userId}`, {
-        name: name.trim(),
-      }, {
-        headers: {
-          Authorization: `Bearer ${token}`,
+      await api.patch(
+        `/api/collections/users/records/${userId}`,
+        {
+          name: name.trim(),
         },
-      });
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
 
       Alert.alert("Sucesso", "Nome atualizado!");
       setIsEditing(false);
@@ -110,10 +114,10 @@ export default function Profile() {
           autoCapitalize="words"
         />
 
-        <Text style={[styles.label, { marginTop: 24 }]}>Email (não editável)</Text>
+        <Text style={[styles.label, { marginTop: 24 }]}>Email (identify)</Text>
         <TextInput
           style={[styles.input, styles.inputDisabled]}
-          value={email}
+          value={identify}
           editable={false}
           autoCapitalize="none"
           autoCorrect={false}
@@ -174,8 +178,19 @@ const styles = StyleSheet.create({
     shadowRadius: 8,
     elevation: 3,
   },
-  label: { fontSize: 16, fontWeight: "600", marginTop: 16, marginBottom: 4, color: "#444" },
-  input: { backgroundColor: "#f1f1f1", padding: 12, borderRadius: 10, fontSize: 15 },
+  label: {
+    fontSize: 16,
+    fontWeight: "600",
+    marginTop: 16,
+    marginBottom: 4,
+    color: "#444",
+  },
+  input: {
+    backgroundColor: "#f1f1f1",
+    padding: 12,
+    borderRadius: 10,
+    fontSize: 15,
+  },
   inputDisabled: { backgroundColor: "#e0e0e0", color: "#888" },
   buttonWrapper: { marginTop: 24 },
 });
