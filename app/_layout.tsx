@@ -1,10 +1,13 @@
 import { ThemeProvider } from '@/context/ThemeContext';
+import TokenContextProvider from '@/context/useContext';
 import { ActionSheetProvider } from '@expo/react-native-action-sheet';
 import { Stack } from 'expo-router';
 export default function Layout() {
   return (
        <ActionSheetProvider>
          <ThemeProvider>
+    <TokenContextProvider>
+
     <Stack
       screenOptions={{
         headerShown: false,
@@ -30,7 +33,9 @@ export default function Layout() {
    
       />
     </Stack>
+    </TokenContextProvider>
     </ThemeProvider>
+    
     </ActionSheetProvider>
   );
 }

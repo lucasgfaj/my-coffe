@@ -1,77 +1,81 @@
-import Button from "@/components/ui/Button";
 import { Feather } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
 import { useEffect, useState } from "react";
 import {
-    Alert,
-    ScrollView,
-    StyleSheet,
-    Text,
-    TextInput,
-    TouchableOpacity,
-    View,
+  Alert,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
 } from "react-native";
 
-import useAuth from "@/firebase/hooks/useAuth";
-import { doc, getFirestore, updateDoc } from "firebase/firestore";
+import Button from "@/components/ui/Button";
+import { useTokenContext } from "@/context/useContext";
+import api from "@/services/api";
 
 export default function Profile() {
-  const { user, logout } = useAuth();
+  const { token, setToken } = useTokenContext();
   const router = useRouter();
 
-  const [name, setName] = useState(""); // só o nome pode editar
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [userId, setUserId] = useState(""); // ID do usuário no PocketBase
   const [isEditing, setIsEditing] = useState(false);
   const [loadingSave, setLoadingSave] = useState(false);
 
-  const firestore = getFirestore();
-
   useEffect(() => {
-    if (user) {
-      // Buscar o nome no Firestore
-      const userDocRef = doc(firestore, "users", user.uid);
-      getUserName(userDocRef);
+    if (!token) {
+      router.replace("/login");
+      return;
     }
-  }, [user]);
 
-  async function getUserName(userDocRef: any) {
+    fetchUserData();
+  }, [token]);
+
+  const fetchUserData = async () => {
     try {
-      const { getDoc } = await import("firebase/firestore");
-      const docSnap = await getDoc(userDocRef);
-      if (docSnap.exists()) {
-        const data = docSnap.data();
-        if (data && typeof data === "object" && "name" in data && typeof (data as any).name === "string") {
-          setName((data as any).name);
-        }
-      }
+      const res = await api.get("/api/users/authenticated", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      setName(res.data.name);
+      setEmail(res.data.email);
+      setUserId(res.data.id);
     } catch (error) {
-      console.log("Erro ao buscar nome do usuário:", error);
+      console.error("Erro ao carregar dados:", error);
+      Alert.alert("Erro", "Falha ao carregar dados do perfil.");
     }
-  }
+  };
 
   const handleLogout = async () => {
     try {
-      await logout();
-      router.replace("/"); // ou rota de login
+      setToken(""); // remove token do contexto
+      router.replace("/login");
     } catch (error) {
       Alert.alert("Erro", "Falha ao fazer logout.");
     }
   };
 
   const handleSave = async () => {
+    if (!name.trim()) {
+      Alert.alert("Erro", "Nome não pode ser vazio");
+      return;
+    }
+
     try {
-      if (!user) {
-        Alert.alert("Erro", "Usuário não autenticado");
-        return;
-      }
-      if (!name.trim()) {
-        Alert.alert("Erro", "Nome não pode ser vazio");
-        return;
-      }
       setLoadingSave(true);
 
-      // Atualizar nome no Firestore
-      const userDocRef = doc(firestore, "users", user.uid);
-      await updateDoc(userDocRef, { name: name.trim() });
+      await api.patch(`/api/collections/users/records/${userId}`, {
+        name: name.trim(),
+      }, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
 
       Alert.alert("Sucesso", "Nome atualizado!");
       setIsEditing(false);
@@ -106,11 +110,10 @@ export default function Profile() {
           autoCapitalize="words"
         />
 
-        {/* Email e senha não editáveis */}
         <Text style={[styles.label, { marginTop: 24 }]}>Email (não editável)</Text>
         <TextInput
           style={[styles.input, styles.inputDisabled]}
-          value={user?.email || ""}
+          value={email}
           editable={false}
           autoCapitalize="none"
           autoCorrect={false}
