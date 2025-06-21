@@ -16,44 +16,44 @@ import { useTokenContext } from "@/context/useContext";
 import api from "@/services/api";
 
 export default function Profile() {
-  const { token, setToken } = useTokenContext();
+  const { token, userId, setToken, setUserId } = useTokenContext();
   const router = useRouter();
 
   const [name, setName] = useState("");
-  const [identify, setIdentify] = useState(""); // <-- agora representa o e-mail
-  const [userId, setUserId] = useState("");
+  const [email, setEmail] = useState("");
   const [isEditing, setIsEditing] = useState(false);
   const [loadingSave, setLoadingSave] = useState(false);
 
   useEffect(() => {
-    if (!token) {
+    if (!token || !userId) {
       router.replace("/login");
       return;
     }
 
     fetchUserData();
-  }, [token]);
+  }, [token, userId]);
 
   const fetchUserData = async () => {
-  try {
-    const res = await api.get("/api/collections/users/auth-with-token", {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    try {
+      const res = await api.get(`/api/collections/users/records/${userId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
 
-    setName(res.data.record.name || "");
-    setIdentify(res.data.record.identify || "");
-    setUserId(res.data.record.id);
-  } catch (error) {
-    console.error("Erro ao carregar dados:", error);
-    Alert.alert("Erro", "Falha ao carregar dados do perfil.");
-  }
-};
+      const user = res.data;
+      setName(user.name);
+      setEmail(user.email);
+    } catch (error) {
+      console.error("Erro ao carregar dados:", error);
+      Alert.alert("Erro", "Falha ao carregar dados do perfil.");
+    }
+  };
 
   const handleLogout = async () => {
     try {
-      setToken("");
+      setToken(undefined);
+      setUserId(undefined);
       router.replace("/login");
     } catch (error) {
       Alert.alert("Erro", "Falha ao fazer logout.");
@@ -114,10 +114,10 @@ export default function Profile() {
           autoCapitalize="words"
         />
 
-        <Text style={[styles.label, { marginTop: 24 }]}>Email (identify)</Text>
+        <Text style={[styles.label, { marginTop: 24 }]}>Email</Text>
         <TextInput
           style={[styles.input, styles.inputDisabled]}
-          value={identify}
+          value={email}
           editable={false}
           autoCapitalize="none"
           autoCorrect={false}

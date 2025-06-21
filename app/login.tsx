@@ -19,7 +19,7 @@ import { StyleSheet } from "react-native";
 export default function LoginScreen() {
   const router = useRouter();
   const { theme, colors, toggleTheme } = useTheme();
-  const { token, setToken } = useTokenContext();
+  const { token, setToken, setUserId } = useTokenContext();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -30,27 +30,40 @@ export default function LoginScreen() {
       router.replace("/(coffe)/home");
     }
   }, [token]);
+const login = async () => {
+  try {
+    setLoading(true);
 
-  const login = async () => {
-    try {
-      setLoading(true);
-      const response = await api.post("/api/collections/users/auth-with-password", {
-        identity: email,
-        password: password,
-      });
+    const response = await api.post("/api/collections/users/auth-with-password", {
+      identity: email,
+      password: password,
+    });
 
-      setToken(response.data.token);
-      router.replace("/(coffe)/home");
-    } catch (error) {
-      if (error instanceof Error) {
-        Alert.alert("Erro ao entrar", error.message);
-      } else {
-        Alert.alert("Erro desconhecido", "Algo deu errado.");
-      }
-    } finally {
-      setLoading(false);
+    const token = response.data.token;
+    const user = response.data.record; // Aqui estão os dados do usuário logado
+
+    console.log("Token:", token);
+    console.log("ID do usuário:", user.id);
+    console.log("Nome:", user.name);
+    console.log("Email:", user.email);
+
+    setToken(token);
+    setUserId(user.id); // Salva o ID do usuário no contexto
+
+    // Se quiser salvar o ID do usuário também, crie um setUser ou algo assim no contexto
+
+    router.replace("/(coffe)/home");
+  } catch (error) {
+    if (error instanceof Error) {
+      Alert.alert("Erro ao entrar", error.message);
+    } else {
+      Alert.alert("Erro desconhecido", "Algo deu errado.");
     }
-  };
+  } finally {
+    setLoading(false);
+  }
+};
+
 
   return (
     <KeyboardAvoidingView
