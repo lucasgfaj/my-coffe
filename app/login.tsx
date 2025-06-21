@@ -4,37 +4,50 @@ import {
   Alert,
   KeyboardAvoidingView,
   Platform,
-  StyleSheet,
   Text,
   TextInput,
   TouchableOpacity,
-  View,
+  View
 } from "react-native";
 
 import Button from "@/components/ui/Button";
 <<<<<<< HEAD
 =======
 import { useTheme } from "@/context/ThemeContext";
+<<<<<<< HEAD
 >>>>>>> develop
 import useAuth from "@/firebase/hooks/useAuth";
+=======
+import { useTokenContext } from "@/context/useContext";
+import api from "@/services/api";
+import { StyleSheet } from "react-native";
+>>>>>>> develop
 
-export default function _screen() {
-  const { user, login, loading } = useAuth();
+export default function LoginScreen() {
   const router = useRouter();
 <<<<<<< HEAD
 =======
   const { theme, colors, toggleTheme } = useTheme();
+<<<<<<< HEAD
+>>>>>>> develop
+=======
+  const { token, setToken, setUserId } = useTokenContext();
 >>>>>>> develop
 
-  const [email, setEmail] = useState("user@example.com");
-  const [password, setPassword] = useState("123456");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    if (user) {
+    if (token) {
       router.replace("/(coffe)/home");
     }
-  }, [user]);
+  }, [token]);
+const login = async () => {
+  try {
+    setLoading(true);
 
+<<<<<<< HEAD
   if (loading) {
     return (
       <View
@@ -57,7 +70,37 @@ export default function _screen() {
         </Text>
       </View>
     );
+=======
+    const response = await api.post("/api/collections/users/auth-with-password", {
+      identity: email,
+      password: password,
+    });
+
+    const token = response.data.token;
+    const user = response.data.record;
+
+    console.log("Token:", token);
+    console.log("ID do usuário:", user.id);
+    console.log("Nome:", user.name);
+    console.log("Email:", user.email);
+
+    setToken(token);
+    setUserId(user.id); // Salva o ID do usuário no contexto
+
+
+    router.replace("/(coffe)/home");
+  } catch (error) {
+    if (error instanceof Error) {
+      Alert.alert("Erro ao entrar", error.message);
+    } else {
+      Alert.alert("Erro desconhecido", "Algo deu errado.");
+    }
+  } finally {
+    setLoading(false);
+>>>>>>> develop
   }
+};
+
 
   return (
     <KeyboardAvoidingView
@@ -90,7 +133,7 @@ export default function _screen() {
         onPress={toggleTheme}
         style={[styles.themeToggleButton, { backgroundColor: colors.primary }]}
       >
-        <Text style={[styles.themeToggleButtonText, { color: colors.text, fontSize: 20 }]}>
+        <Text style={[styles.themeToggleButtonText, { color: colors.text }]}>
           {theme === 'light' ? '🌙' : '🌞'}
         </Text>
       </TouchableOpacity>
@@ -107,6 +150,7 @@ export default function _screen() {
         <Text style={[styles.title, { color: colors.text }]}>Bem-vindo de volta!</Text>
         <Text style={[styles.subtitle, { color: colors.text }]}>Acesse sua conta</Text>
 
+<<<<<<< HEAD
         <View style={[styles.demoBox, { backgroundColor: colors.inputBackground }]}>
           <Text style={[styles.demoTitle, { color: colors.primary }]}>Acesso Demo:</Text>
           <Text style={[styles.demoText, { color: colors.text }]}>
@@ -118,6 +162,8 @@ export default function _screen() {
           </Text>
         </View>
 
+=======
+>>>>>>> develop
         <TextInput
 <<<<<<< HEAD
           style={styles.input}
@@ -133,12 +179,16 @@ export default function _screen() {
           }]}
           value={email}
           onChangeText={setEmail}
-          placeholder="Email"
+          placeholder="Email ou nome de usuário"
           placeholderTextColor={colors.text}
+<<<<<<< HEAD
 >>>>>>> develop
           keyboardType="email-address"
+=======
+>>>>>>> develop
           autoCapitalize="none"
         />
+
         <TextInput
 <<<<<<< HEAD
           style={styles.input}
@@ -161,19 +211,8 @@ export default function _screen() {
         />
 
         <Button
-          text="Entrar"
-          onPress={async () => {
-            try {
-              await login(email, password);
-              router.replace("/(coffe)/home");
-            } catch (error) {
-              if (error instanceof Error) {
-                Alert.alert("Erro ao entrar", error.message);
-              } else {
-                Alert.alert("Erro ao entrar", "Erro desconhecido.");
-              }
-            }
-          }}
+          text={loading ? "Entrando..." : "Entrar"}
+          onPress={login}
           style={styles.loginButton}
 <<<<<<< HEAD
         />
@@ -189,9 +228,15 @@ export default function _screen() {
         />
 
         <View style={styles.registerContainer}>
-          <Text style={[styles.registerText, { color: colors.text }]}>Ainda não é usuário? </Text>
+          <Text style={[styles.registerText, { color: colors.text }]}>
+            Ainda não é usuário?
+          </Text>
           <TouchableOpacity onPress={() => router.push("/register")}>
+<<<<<<< HEAD
             <Text style={[styles.registerLink, { color: colors.primary }]}>Cadastre-se</Text>
+>>>>>>> develop
+=======
+            <Text style={[styles.registerLink, { color: colors.primary }]}> Cadastre-se</Text>
 >>>>>>> develop
           </TouchableOpacity>
         </View>

@@ -11,15 +11,15 @@ import {
 } from "react-native";
 
 import Button from "@/components/ui/Button";
-import useAuth from "@/firebase/hooks/useAuth";
+import api from "@/services/api"; // << PocketBase API
 
 export default function RegisterScreen() {
-  const { registerUser, loading } = useAuth();
   const router = useRouter();
 
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const handleRegister = async () => {
     if (!name.trim()) {
@@ -36,34 +36,26 @@ export default function RegisterScreen() {
     }
 
     try {
-      await registerUser(email, password, name); // 👈 Nome agora é passado
+      setLoading(true);
+
+      await api.post("/api/collections/users/records", {
+        email: email,
+        password: password,
+        passwordConfirm: password,
+        name: name,
+        emailVisibility: true,
+      });
+
       Alert.alert("Sucesso", "Usuário registrado com sucesso!");
       router.replace("/login");
-    } catch (error) {
-      if (error instanceof Error) {
-        Alert.alert("Erro ao registrar", error.message);
-      } else {
-        Alert.alert("Erro ao registrar", "Erro desconhecido.");
-      }
+    } catch (error: any) {
+      const message =
+        error?.response?.data?.message || error.message || "Erro desconhecido";
+      Alert.alert("Erro ao registrar", message);
+    } finally {
+      setLoading(false);
     }
   };
-
-  if (loading) {
-    return (
-      <View
-        style={{
-          flex: 1,
-          justifyContent: "center",
-          alignItems: "center",
-          backgroundColor: "#FCF8F3",
-        }}
-      >
-        <Text style={{ fontSize: 18, color: "#6D4C41", marginBottom: 10 }}>
-          Carregando...
-        </Text>
-      </View>
-    );
-  }
 
   return (
     <KeyboardAvoidingView
@@ -72,6 +64,7 @@ export default function RegisterScreen() {
     >
       <View style={styles.innerContainer}>
         <Text style={styles.title}>Cadastre-se</Text>
+
         <TextInput
           style={styles.input}
           value={name}
@@ -109,10 +102,7 @@ export default function RegisterScreen() {
 
         <View style={styles.loginContainer}>
           <Text style={styles.loginText}>Já tem uma conta? </Text>
-          <Text
-            style={styles.loginLink}
-            onPress={() => router.push("/login")}
-          >
+          <Text style={styles.loginLink} onPress={() => router.push("/login")}>
             Entre aqui
           </Text>
         </View>
