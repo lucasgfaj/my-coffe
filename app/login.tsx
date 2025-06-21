@@ -40,7 +40,7 @@ const login = async () => {
     });
 
     const token = response.data.token;
-    const user = response.data.record; // Aqui estão os dados do usuário logado
+    const user = response.data.record;
 
     console.log("Token:", token);
     console.log("ID do usuário:", user.id);
@@ -50,7 +50,6 @@ const login = async () => {
     setToken(token);
     setUserId(user.id); // Salva o ID do usuário no contexto
 
-    // Se quiser salvar o ID do usuário também, crie um setUser ou algo assim no contexto
 
     router.replace("/(coffe)/home");
   } catch (error) {
