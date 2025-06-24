@@ -1,0 +1,80 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Rating matches snapshot with only value 1`] = `
+<View
+  style={
+    [
+      {
+        "alignItems": "center",
+        "borderRadius": 10,
+        "flexDirection": "row",
+        "paddingVertical": 2,
+        "position": "absolute",
+      },
+      undefined,
+    ]
+  }
+>
+  <Text>
+    star
+  </Text>
+  <Text
+    style={
+      {
+        "color": "black",
+        "fontSize": 18,
+        "fontWeight": "600",
+        "marginLeft": 4,
+      }
+    }
+  >
+    3.5
+  </Text>
+</View>
+`;
+
+exports[`Rating matches snapshot with value and votes 1`] = `
+<View
+  style={
+    [
+      {
+        "alignItems": "center",
+        "borderRadius": 10,
+        "flexDirection": "row",
+        "paddingVertical": 2,
+        "position": "absolute",
+      },
+      undefined,
+    ]
+  }
+>
+  <Text>
+    star
+  </Text>
+  <Text
+    style={
+      {
+        "color": "black",
+        "fontSize": 18,
+        "fontWeight": "600",
+        "marginLeft": 4,
+      }
+    }
+  >
+    4.8
+  </Text>
+  <Text
+    style={
+      {
+        "color": "#A4A4A4",
+        "fontSize": 14,
+        "marginLeft": 4,
+      }
+    }
+  >
+    (
+    230
+    )
+  </Text>
+</View>
+`;
