@@ -4,7 +4,6 @@ import { fireEvent, render, waitFor } from '@testing-library/react-native';
 import { useRouter } from 'expo-router';
 import React from 'react';
 
-// Mocks
 jest.mock('expo-router', () => ({
   useRouter: jest.fn(),
 }));

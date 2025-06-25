@@ -1,7 +1,6 @@
-// __tests__/Rating.test.tsx
 import { render } from '@testing-library/react-native';
 import React from 'react';
-import Rating from '../components/ui/Rating'; // Ajuste o caminho conforme necessário
+import Rating from '../components/ui/Rating';
 jest.mock('@expo/vector-icons', () => {
   const React = require('react');
   const { Text } = require('react-native');
@@ -28,7 +27,7 @@ describe('Rating', () => {
 
   it('does not render votes when not provided', () => {
     const { queryByText } = render(<Rating value={4.0} />);
-    expect(queryByText('(150)')).toBeNull(); // Garante que o texto de votos não esteja presente
+    expect(queryByText('(150)')).toBeNull(); 
   });
 
   it('applies custom styles to the container', () => {
@@ -38,7 +37,6 @@ describe('Rating', () => {
     expect(ratingContainer).toHaveStyle(customStyle);
   });
 
-  // Snapshot test para garantir que a estrutura do componente não muda inesperadamente
   it('matches snapshot with value and votes', () => {
     const { toJSON } = render(<Rating value={4.8} votes={230} />);
     expect(toJSON()).toMatchSnapshot();
