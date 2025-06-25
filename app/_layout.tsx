@@ -1,25 +1,13 @@
-<<<<<<< HEAD
-=======
 import { ThemeProvider } from '@/context/ThemeContext';
-<<<<<<< HEAD
->>>>>>> develop
-=======
 import TokenContextProvider from '@/context/useContext';
->>>>>>> develop
 import { ActionSheetProvider } from '@expo/react-native-action-sheet';
 import { Stack } from 'expo-router';
 export default function Layout() {
   return (
        <ActionSheetProvider>
-<<<<<<< HEAD
-=======
          <ThemeProvider>
-<<<<<<< HEAD
->>>>>>> develop
-=======
     <TokenContextProvider>
 
->>>>>>> develop
     <Stack
       screenOptions={{
         headerShown: false,
@@ -45,16 +33,8 @@ export default function Layout() {
    
       />
     </Stack>
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-    </ThemeProvider>
->>>>>>> develop
-=======
     </TokenContextProvider>
-    </ThemeProvider>
-    
->>>>>>> develop
+    </ThemeProvider>    
     </ActionSheetProvider>
   );
 }

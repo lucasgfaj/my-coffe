@@ -2,6 +2,13 @@
 import { render } from '@testing-library/react-native';
 import React from 'react';
 import Rating from '../components/ui/Rating'; // Ajuste o caminho conforme necessário
+jest.mock('@expo/vector-icons', () => {
+  const React = require('react');
+  const { Text } = require('react-native');
+  return {
+    Ionicons: ({ name, testID }: any) => <Text testID={testID}>{name}</Text>,
+  };
+});
 
 describe('Rating', () => {
   it('renders the rating value correctly', () => {

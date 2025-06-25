@@ -1,6 +1,13 @@
-import { fireEvent, render } from '@testing-library/react-native';
+import { fireEvent, render, waitFor } from '@testing-library/react-native';
 import React from 'react';
 import Button from '../components/ui/Button';
+jest.mock('@expo/vector-icons', () => {
+  const React = require('react');
+  const { Text } = require('react-native');
+  return {
+    Ionicons: ({ name, testID }: any) => <Text testID={testID}>{name}</Text>,
+  };
+});
 
 describe('Button', () => {
   it('renders correctly with text', () => {
@@ -24,11 +31,13 @@ describe('Button', () => {
     expect(getByTestId('button')).toHaveStyle({ backgroundColor: 'blue' });
   });
 
-  it('renders an icon when provided', () => {
+  it('renders an icon when provided', async () => {
     const { getByTestId } = render(
       <Button icon="add" testID="button" iconTestID="icon" />
     );
-    expect(getByTestId('icon')).toBeTruthy();
+   await waitFor(() => {
+  expect(getByTestId('icon')).toBeTruthy();
+});
   });
 
   it('renders both text and icon with correct spacing', () => {

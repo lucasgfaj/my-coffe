@@ -71,3 +71,33 @@ Starts the Expo server in tunnel mode (useful behind firewalls or NAT).
 ```bash
 yarn start --tunnel
 ```
+
+# 📱 Automated Testing with React Native / Expo
+
+## ✅ Difference Between Unit Tests and End-to-End (E2E) Tests
+
+**Unit tests** check **small, isolated units of code**, such as functions, hooks, or components.  
+The goal is to ensure that **each part of the application works correctly in isolation**.
+
+**E2E (End-to-End) tests**, on the other hand, simulate the **user behavior**, testing the **entire flow of the application** — from interacting with the interface to communicating with services (such as login, registration, screen navigation).  
+They ensure that the main features of the app work properly from start to finish.
+
+| Test Type | Scope                          | Example                                                              |
+|-----------|--------------------------------|----------------------------------------------------------------------|
+| Unit Test | Isolated components or hooks   | Test if a button renders and triggers `onPress`                     |
+| E2E Test  | Full app (user → system flow)  | Test if the user can register and see a success message             |
+
+---
+
+## 🧪 How to Run Unit Tests with [Jest](https://jestjs.io/)
+
+To run unit tests using Jest:
+
+```bash
+yarn test -- -u
+```
+
+## 🧪 How to Run Tests - End-to-End with [Playwright](https://playwright.dev/)
+```bash
+npx playwright test
+```

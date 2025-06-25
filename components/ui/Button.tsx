@@ -22,11 +22,8 @@ interface ButtonProps {
   style?: StyleProp<ViewStyle>;
   iconColor?: string;
   iconSize?: number;
-<<<<<<< HEAD
-=======
    iconTestID?: string;
   testID?: string;
->>>>>>> develop
 }
 
 export default function Button({
@@ -41,9 +38,12 @@ export default function Button({
   icon,
   iconColor = '#fff',
   iconSize = 20,
+  testID,
+  iconTestID
 }: ButtonProps) {
   return (
     <TouchableOpacity
+    testID={testID} 
       style={[
         styles.button,
         {
@@ -57,7 +57,7 @@ export default function Button({
       onPress={onPress}
     >
       <View style={styles.content}>
-        {icon && <Ionicons name={icon} size={iconSize} color={iconColor} />}
+        {icon && <Ionicons name={icon} size={iconSize} color={iconColor}  testID={iconTestID}  />}
         {text && <Text style={[styles.text, { color: textColor, marginLeft: icon ? 8 : 0 }]}>{text}</Text>}
       </View>
     </TouchableOpacity>

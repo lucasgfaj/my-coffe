@@ -6,15 +6,13 @@ interface RatingProps {
   value: number; 
   votes?: number; 
   style?: ViewStyle;
-<<<<<<< HEAD
-=======
   testID?: string;
->>>>>>> develop
 }
 
-export default function Rating({ value, votes, style }: RatingProps) {
+export default function Rating({ value, votes, style, testID }: RatingProps) {
   return (
-    <View style={[styles.rating, style]}>
+    
+    <View style={[styles.rating, style]} testID={testID}>
       <Ionicons name="star" size={22} color="#FBBE21" />
       <Text style={styles.ratingText}>{value.toFixed(1)}</Text>
       {votes !== undefined && (
