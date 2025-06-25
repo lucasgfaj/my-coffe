@@ -89,7 +89,7 @@ They ensure that the main features of the app work properly from start to finish
 
 ---
 
-## 🧪 How to Run Unit Tests
+## 🧪 How to Run Unit Tests with [Jest](https://jestjs.io/)
 
 To run unit tests using Jest:
 
@@ -97,35 +97,7 @@ To run unit tests using Jest:
 yarn test -- -u
 ```
 
-## ⚙️ Installing and Running Maestro on Linux
-
-[Maestro](https://maestro.mobile.dev/) is a tool for writing and executing E2E (End-to-End) test flows in mobile apps. Below are the steps to install and use it on Linux.
-
----
-
-### 📥 Step 1: Install Maestro on Linux
-
-Run the following command in your terminal to install the latest version:
-
+## 🧪 How to Run Tests - End-to-End with [Playwright](https://playwright.dev/)
 ```bash
-curl -fsSL "https://get.maestro.mobile.dev" | bash
+npx playwright test
 ```
-
-After installation, the maestro CLI will be available globally.
-
-### 🆙 (Optional) Upgrade Maestro
-
-To upgrade to the latest version of Maestro, simply run the installation script again:
-
-```
-curl -fsSL "https://get.maestro.mobile.dev" | bash
-```
-
-## ▶️ Run the Flow
-
-To run your E2E test:
-
-```bash
-maestro test flows/register-user.yaml
-```
-Tip: Make sure your app is already running in the emulator or on a physical device before running the test.
